@@ -1,0 +1,19 @@
+{
+  "name": "connect-demo",
+  "version": "1.0.0",
+  "description": "This is a demo to showcase how to use Uplyft Connect on your website",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uplyft-dev/connect-demo.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uplyft-dev/connect-demo/issues"
+  },
+  "homepage": "https://github.com/uplyft-dev/connect-demo#readme"
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uplyft Connect Demo</title>
+    <link type="text/css" rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="favicon.png">
+</head>
+<body>
+
+<div class="view-container">
+    <a id="login-button" href="" target="_self">Log me in with Uppers</a>
+
+    <div id="profile-container">
+        <h1>Your profile:</h1>
+        <code id="profile"></code>
+    </div>
+</div>
+
+</body>
+
+<script>
+  if (window.location.hash.indexOf('id_token') !== -1) {
+    handleLogin();
+  } else {
+    showLoginButton();
+  }
+
+  function handleLogin() {
+    const hash = window.location.hash.substr(1);
+    const params = hash.split('&');
+    const id_token = params.find(param => param.indexOf('id_token') !== -1).split('=')[1];
+    const payload = parseJwt(id_token);
+
+    document.getElementById('profile-container').classList.toggle('show');
+    document.getElementById('profile').innerText = JSON.stringify(payload, null, 4);
+  }
+
+  function parseJwt (token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(char => {
+      return '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  }
+
+  function showLoginButton() {
+    const CONNECT_URL = 'https://uppers-alpha.auth.eu-central-1.amazoncognito.com'; // Will be provided by Uplyft
+    const CONNECT_CLIENT_ID = '7d3gktssvvba6emj7ptqjhccg4'; // Will be provided by Uplyft
+    const RESPONSE_TYPE = 'token';
+    const SCOPE = 'email+openid+phone+profile'; // Can be any combination of these
+    const REDIRECT_URI = window.location; // Configure the URL that should be called after authentication, needs to be registered at Uplyft
+    const STATE = 'some-state'; // Custom value that can be set by the client. Will be included in the redirect. Can be used to prevent CSRF
+    const TYPE = 'login'; // Can be either 'login' or 'signup'
+
+    const query = {
+      client_id: CONNECT_CLIENT_ID,
+      response_type: RESPONSE_TYPE,
+      scope: SCOPE,
+      redirect_uri: REDIRECT_URI,
+      state: STATE,
+    };
+
+    const parsedQuery = Object.keys(query)
+    .filter((key) => query[key] !== '')
+    .map((key) => `${key}=${query[key]}`)
+    .join('&');
+
+    const URL = `${CONNECT_URL}/${TYPE}?${parsedQuery}`;
+
+    document.getElementById('login-button').href = URL;
+    document.getElementById('login-button').classList.toggle('show');
+  }
+</script>
+</html>
