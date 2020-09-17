@@ -3,6 +3,9 @@ This project provides a demo on how to integrate an Uplyft member log-in on your
 
 The member log-in works for every whitelabel program available at Uplyft.
 
+## Demo
+Check out the live [demo](https://uplyft-dev.github.io/connect-demo/).
+
 ## Configuration
 | Param  | Description |
 |---|---|
