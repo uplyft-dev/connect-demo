@@ -49,7 +49,6 @@
   function showLoginButton() {
     const CONNECT_URL = 'https://connect.uppers.alpha.uplyft.com'; // Will be provided by Uplyft
     const CONNECT_CLIENT_ID = '1novo4atmn4e38k1bked20rtj'; // Will be provided by Uplyft
-    const RESPONSE_TYPE = 'token';
     const SCOPE = 'email+openid+phone+profile'; // Can be any combination of these
     const REDIRECT_URI = window.location; // Configure the URL that should be called after authentication, needs to be registered at Uplyft
     const STATE = 'some-state'; // Custom value that can be set by the client. Will be included in the redirect. Can be used to prevent CSRF
@@ -57,7 +56,6 @@
 
     const query = {
       client_id: CONNECT_CLIENT_ID,
-      response_type: RESPONSE_TYPE,
       scope: SCOPE,
       redirect_uri: REDIRECT_URI,
       state: STATE,
